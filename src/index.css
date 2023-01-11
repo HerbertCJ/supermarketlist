@@ -24,7 +24,7 @@
 
 /* List */
 
-.grocery-item {
+.market-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -121,7 +121,7 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.grocery-form h3 {
+.market-form h3 {
   color: hsl(205, 86%, 17%);
   margin-bottom: 1.5rem;
   text-align: center;
@@ -132,7 +132,7 @@
   justify-content: center;
 }
 
-.grocery {
+.market {
   padding: 0.25rem;
   padding-left: 1rem;
   background: hsl(210, 36%, 96%);
@@ -166,7 +166,7 @@
   color: #fff;
 }
 
-.grocery-container {
+.market-container {
   margin-top: 2rem;
 }
 

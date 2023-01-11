@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
+const getLocalStorage = () => {
+  let list = localStorage.getItem('list')
+  if (list) {
+    return JSON.parse(localStorage.getItem('list'))
+  }
+  else {
+    return []
+  }
+}
 
 function App() {
   const [name, setName] = useState('')
-  const [list, setList] = useState([])
+  const [list, setList] = useState(getLocalStorage())
   const [editId, setEditId] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [alert, setAlert] = useState({ status: false, type: '', msg: '' })
 
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(list))
+  }, [list])
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!name) {      
+    if (!name) {
       showAlert(true, 'danger', 'please enter a value')
     }
     else if (name && isEditing) {
@@ -49,7 +62,7 @@ function App() {
   }
 
   const showAlert = (status = false, type = "", msg = "") => {
-    setAlert({status, type, msg})
+    setAlert({ status, type, msg })
   }
 
   const clearList = () => {
@@ -57,25 +70,25 @@ function App() {
     setList([])
   }
 
-  return (    
-      <section className="section-center">  
-          <form onSubmit={handleSubmit} className='grocery-form'>
-          {alert.status && <Alert {...alert} removeAlert={showAlert} list={list} />}
-          <h3>SuperMarket List</h3>
-            <div className="form-control">
-              <input type="text" className="grocery" value={name} onChange={(e) => setName(e.target.value)} />
-              <button type="submit" className="submit-btn">
-                {isEditing ? 'Edit' : 'Submit'}
-              </button>
-            </div>
-          </form>
-        {list.length > 0 &&
-          <div className="grocery-container">
-            <List list={list} handleEdit={handleEdit} handleDelete={handleDelete} />
-            <button className="clear-btn" onClick={clearList}>Clear Items</button>
-          </div>
-        }
-      </section>    
+  return (
+    <section className="section-center">
+      <form onSubmit={handleSubmit} className='market-form'>
+        {alert.status && <Alert {...alert} removeAlert={showAlert} list={list} />}
+        <h3>SuperMarket List</h3>
+        <div className="form-control">
+          <input type="text" className="market" value={name} onChange={(e) => setName(e.target.value)} />
+          <button type="submit" className="submit-btn">
+            {isEditing ? 'Edit' : 'Submit'}
+          </button>
+        </div>
+      </form>
+      {list.length > 0 &&
+        <div className="market-container">
+          <List list={list} handleEdit={handleEdit} handleDelete={handleDelete} />
+          <button className="clear-btn" onClick={clearList}>Clear Items</button>
+        </div>
+      }
+    </section>
   );
 }
 
