@@ -109,6 +109,7 @@
   }
 }
 
+
 .section-center {
   background: #fff;
   border-radius: 0.25rem;
@@ -130,6 +131,13 @@
 .form-control {
   display: flex;
   justify-content: center;
+}
+
+@media screen and (max-width: 550px) {
+  .form-control {
+    width: 50%;       
+    margin: 0 auto;
+  }
 }
 
 .market {
