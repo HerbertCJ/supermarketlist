@@ -1,5 +1,7 @@
 import { useState } from "react";
 import List from "./List";
+import Alert from "./Alert";
+
 
 function App() {
   const [name, setName] = useState('')
@@ -10,19 +12,19 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!name) {
-      console.log('ALERTA dados vazios');
+    if (!name) {      
+      showAlert(true,'danger', 'Please enter some value to the item')  
     }
-    else if (name && isEditing) {     
-    setList(list.map((item) => {
-      if(item.id === editId) {
-        return { ...item, title: name }        
-      }
-      return item
-    }))    
-    setName('')
-    setEditId(null)
-    setIsEditing(false)
+    else if (name && isEditing) {
+      setList(list.map((item) => {
+        if (item.id === editId) {
+          return { ...item, title: name }
+        }
+        return item
+      }))
+      setName('')
+      setEditId(null)
+      setIsEditing(false)
     }
     else {
       const newItem = { id: new Date().getMilliseconds().toString(), title: name }
@@ -43,25 +45,33 @@ function App() {
     setList(newList)
   }
 
-  return (
-    <div>
-      <section>
-        <h3>SuperMarket List</h3>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            <button type="submit">
-              {isEditing ? 'Edit' : 'Submit'}
-            </button>
+  const showAlert = (status = false, type = "", msg = "") => {
+    setAlert({status, type, msg})
+  }
+
+  const clearList = () => {
+    setList([])
+  }
+
+  return (    
+      <section className="section-center">  
+          <form onSubmit={handleSubmit} className='grocery-form'>
+          {alert.status && <Alert {...alert} removeAlert={showAlert} list={list} />}
+          <h3>SuperMarket List</h3>
+            <div className="form-control">
+              <input type="text" className="grocery" value={name} onChange={(e) => setName(e.target.value)} />
+              <button type="submit" className="submit-btn">
+                {isEditing ? 'Edit' : 'Submit'}
+              </button>
+            </div>
           </form>
-        </div>
         {list.length > 0 &&
-          <div className="list">
+          <div className="grocery-container">
             <List list={list} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <button className="clear-btn" onClick={clearList}>Clear Items</button>
           </div>
         }
-      </section>
-    </div>
+      </section>    
   );
 }
 

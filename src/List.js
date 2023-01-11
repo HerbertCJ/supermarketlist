@@ -1,14 +1,18 @@
+import {FaEdit, FaTrash} from 'react-icons/fa'
+
 const List = ({ list, handleEdit, handleDelete }) => {
     return (
-        <div>
+        <div className='grocery-list'>
             {list.map((item) => {
                 const { id, title } = item
                 return (
-                    <div key={id}>
-                        {title}
-                        <button type="submit" onClick={() => handleEdit(id)}>edit</button>
-                        <button type="submit" onClick={() => handleDelete(id)}>delete</button>
-                    </div>
+                    <article key={id} className='grocery-item'>
+                        <p className='title'>{title}</p>
+                        <div className='btn-container'>
+                            <button type="button" className='edit-btn' onClick={() => handleEdit(id)}><FaEdit /></button>
+                            <button type="button" className='delete-btn' onClick={() => handleDelete(id)}><FaTrash /></button>
+                        </div>
+                    </article>
                 )
             })}
         </div>
