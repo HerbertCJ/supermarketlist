@@ -11,19 +11,31 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!name) {
-      console.log('dados vazios');
+      console.log('ALERTA dados vazios');
     }
-    else if (name && isEditing) {
-      console.log('editar item');
+    else if (name && isEditing) {     
+    setList(list.map((item) => {
+      if(item.id === editId) {
+        return { ...item, title: name }        
+      }
+      return item
+    }))    
+    setName('')
+    setEditId(null)
+    setIsEditing(false)
     }
     else {
       const newItem = { id: new Date().getMilliseconds().toString(), title: name }
       setList([...list, newItem])
+      setName('')
     }
   }
 
   const handleEdit = (id) => {
-
+    const specificItem = list.find((item) => item.id === id)
+    setIsEditing(true)
+    setEditId(id)
+    setName(specificItem.title)
   }
 
   const handleDelete = (id) => {
