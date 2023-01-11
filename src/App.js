@@ -73,7 +73,7 @@ function App() {
   return (
     <section className="section-center">
       <form onSubmit={handleSubmit} className='market-form'>
-        {alert.status && <Alert {...alert} removeAlert={showAlert} list={list} />}
+        {alert.status && <Alert {...alert} removeAlert={showAlert} />}
         <h3>SuperMarket List</h3>
         <div className="form-control">
           <input type="text" className="market" value={name} onChange={(e) => setName(e.target.value)} />
