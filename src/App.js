@@ -10,16 +10,25 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if(!name) {
+    if (!name) {
       console.log('dados vazios');
     }
-    else if(name && isEditing) {
+    else if (name && isEditing) {
       console.log('editar item');
     }
     else {
-      const newItem = {id: new Date().getMilliseconds().toString(), title: name}
-      setList([...list, newItem])      
+      const newItem = { id: new Date().getMilliseconds().toString(), title: name }
+      setList([...list, newItem])
     }
+  }
+
+  const handleEdit = (id) => {
+
+  }
+
+  const handleDelete = (id) => {
+    const newList = [...list].filter((item) => item.id !== id)
+    setList(newList)
   }
 
   return (
@@ -36,7 +45,7 @@ function App() {
         </div>
         {list.length > 0 &&
           <div className="list">
-            <List list={list} />
+            <List list={list} handleEdit={handleEdit} handleDelete={handleDelete} />
           </div>
         }
       </section>
