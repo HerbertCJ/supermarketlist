@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
@@ -18,10 +18,15 @@ function App() {
   const [editId, setEditId] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
   const [alert, setAlert] = useState({ status: false, type: '', msg: '' })
+  const focusEdit = useRef(null)
 
   useEffect(() => {
-    localStorage.setItem('list', JSON.stringify(list))
+    localStorage.setItem('list', JSON.stringify(list))        
   }, [list])
+
+  useEffect(()=>{
+    focusEdit.current.focus()
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -76,7 +81,7 @@ function App() {
         {alert.status && <Alert {...alert} removeAlert={showAlert} />}
         <h3>SuperMarket List</h3>
         <div className="form-control">
-          <input type="text" className="market" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" className="market" value={name} onChange={(e) => setName(e.target.value)} ref={focusEdit} />
           <button type="submit" className="submit-btn">
             {isEditing ? 'Edit' : 'Submit'}
           </button>
